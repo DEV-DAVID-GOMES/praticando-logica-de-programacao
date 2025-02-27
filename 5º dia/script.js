@@ -23,5 +23,5 @@ switch (menu) {
         break;
     default:
         alert("dados fornecidos errados!")
-        let menu = parseFloat(prompt("Você deseja usar qual operação de matemática para sua conta\n \n(digite o numero para escolher o operador) \n1- Adição\n 2- Subtração\n 3- Multiplicação\n 4- Divisão"))
+        
 }
