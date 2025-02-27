@@ -3,5 +3,6 @@
 let numero = parseFloat(prompt("Insira um numero inteiro:"))
 
 for(let i = 0; i <= numero; i++) {
-    console.log(i)
-}
+     console.log(i)
+ }
+
