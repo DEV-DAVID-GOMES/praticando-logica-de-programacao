@@ -20,7 +20,7 @@ if(idade > 18) {
 }
 
 let dias = idade * 365
-let mes = dias / 30
-let semana = dias / 7
+let mes = idade / 12
+let semana = idade / 52
 
 console.log(`SUA IDADE EM:\n DIAS: ${dias}\n MÊS: ${mes}\n SEMANAS: ${semana}`)
