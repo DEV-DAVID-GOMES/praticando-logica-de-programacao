@@ -41,14 +41,14 @@ class Hotel {
 }
 function cadastrarHotel() {
 
-     let id = parseInt(prompt("Insira o ID do hotel:"))
-     let nome = prompt("Insira o nome do hotel:")
-     let categoria = prompt("Insira a categoria do hotel:")
-     let endereco = prompt("Insira o endereço do hotel:")
-     let telefone = prompt("Insira o telefone do hotel:")
+    let id = parseInt(prompt("Insira o ID do hotel:"))
+    let nome = prompt("Insira o nome do hotel:")
+    let categoria = prompt("Insira a categoria do hotel:")
+    let endereco = prompt("Insira o endereço do hotel:")
+    let telefone = prompt("Insira o telefone do hotel:")
 
-     let novoHotel = new Hotel(id, nome, categoria, endereco, telefone);
-     hoteis.push(novoHotel);
+    let novoHotel = new Hotel(id, nome, categoria, endereco, telefone);
+    hoteis.push(novoHotel);
 }
 
 class Reserva {
@@ -70,4 +70,15 @@ function cadastrarReserva() {
 
     let novaReserva = new Reserva(id, idHotel, nomeResponsavel, diaDeEntrada, diaDeSaida)
     reservas.push(novaReserva)
+}
+
+function exibirReservas(idHotel) {
+    reservas.forEach((reserva) => {
+        if (reserva.idHotel === idHotel) {
+            console.log(`NOME DO HOTEL: ${hoteis.find(hotel => hotel.id === reserva.idHotel).nome}\n` +
+                `NOME DO RESPONSÁVEL DA RESERVA: ${reserva.nomeResponsavel}\n` +
+                `DIA DE ENTRADA: ${reserva.diaDeEntrada}\n` +
+                `DIA DE SAÍDA: ${reserva.diaDeSaida}`);
+        }
+    });
 }
