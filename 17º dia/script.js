@@ -104,3 +104,14 @@ function exibirReservaPorNome(nome) {
 function exibirHoteisPorCategoria(categoria) {
     return hoteis.filter(hotel => hotel.categoria === categoria);
 }
+
+function atualizarTelefoneCadastrado(idHotel, telefone) {
+    let hotel = hoteis.find(hotel => hotel.id === idHotel);
+
+    if (hotel) {
+        hotel.telefone = telefone;
+        console.log(`Telefone atualizado para: ${telefone}`);
+    } else {
+        console.log("Hotel não encontrado.");
+    }
+}
