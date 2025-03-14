@@ -86,7 +86,17 @@ function exibirReservasDoHotel(idHotel) {
 function exibirReserva(id) {
     reservas.forEach((reserva) => {
         if (reserva.id === id) {
-            console.log(`NOME DO HOTEL: ${hoteis.find(hotel => hotel.id ===reserva.idHotel).nome}\n ENDEREÇO: ${hoteis.find(hotel => hotel.id === reserva.idHotel).endereco}\n DIA DE ENTRADA: ${reserva.diaDeEntrada}\n DIA DE SAÍDA: ${reserva.diaDeSaida}`)
+            console.log(`NOME DO HOTEL: ${hoteis.find(hotel => hotel.id === reserva.idHotel).nome}\n ENDEREÇO: ${hoteis.find(hotel => hotel.id === reserva.idHotel).endereco}\n DIA DE ENTRADA: ${reserva.diaDeEntrada}\n DIA DE SAÍDA: ${reserva.diaDeSaida}`)
         }
     })
+}
+
+function exibirReservaPorNome(nome) {
+    reservas.forEach((reserva) => {
+        if (reserva.nomeResponsavel === nome) {
+            console.log(`NOME DO HOTEL: ${hoteis.find(hotel => hotel.id === reserva.idHotel).nome}\n` +
+                `DIA DE ENTRADA: ${reserva.diaDeEntrada}\n` +
+                `DIA DE SAÍDA: ${reserva.diaDeSaida}`);
+        }
+    });
 }
