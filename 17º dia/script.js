@@ -72,7 +72,7 @@ function cadastrarReserva() {
     reservas.push(novaReserva)
 }
 
-function exibirReservas(idHotel) {
+function exibirReservasDoHotel(idHotel) {
     reservas.forEach((reserva) => {
         if (reserva.idHotel === idHotel) {
             console.log(`NOME DO HOTEL: ${hoteis.find(hotel => hotel.id === reserva.idHotel).nome}\n` +
@@ -81,4 +81,12 @@ function exibirReservas(idHotel) {
                 `DIA DE SAÍDA: ${reserva.diaDeSaida}`);
         }
     });
+}
+
+function exibirReserva(id) {
+    reservas.forEach((reserva) => {
+        if (reserva.id === id) {
+            console.log(`NOME DO HOTEL: ${hoteis.find(hotel => hotel.id ===reserva.idHotel).nome}\n ENDEREÇO: ${hoteis.find(hotel => hotel.id === reserva.idHotel).endereco}\n DIA DE ENTRADA: ${reserva.diaDeEntrada}\n DIA DE SAÍDA: ${reserva.diaDeSaida}`)
+        }
+    })
 }
