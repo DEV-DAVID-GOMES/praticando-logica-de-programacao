@@ -100,3 +100,7 @@ function exibirReservaPorNome(nome) {
         }
     });
 }
+
+function exibirHoteisPorCategoria(categoria) {
+    return hoteis.filter(hotel => hotel.categoria === categoria);
+}
