@@ -39,6 +39,17 @@ class Hotel {
         this.telefone = telefone
     }
 }
+
+class Reserva {
+    constructor(id, idHotel, nomeResponsavel, diaDeEntrada, diaDeSaida) {
+        this.id = id
+        this.idHotel = idHotel
+        this.nomeResponsavel = nomeResponsavel
+        this.diaDeEntrada = diaDeEntrada
+        this.diaDeSaida = diaDeSaida
+    }
+}
+
 function cadastrarHotel() {
 
     let id = parseInt(prompt("Insira o ID do hotel:"))
@@ -51,16 +62,6 @@ function cadastrarHotel() {
     hoteis.push(novoHotel);
 }
 
-class Reserva {
-    constructor(id, idHotel, nomeResponsavel, diaDeEntrada, diaDeSaida) {
-        this.id = id
-        this.idHotel = idHotel
-        this.nomeResponsavel = nomeResponsavel
-        this.diaDeEntrada = diaDeEntrada
-        this.diaDeSaida = diaDeSaida
-    }
-}
-
 function cadastrarReserva() {
     let id = parseInt(prompt("Insira o ID da reserva:"))
     let idHotel = parseInt(prompt("Insira o ID do hotel:"))
@@ -68,11 +69,41 @@ function cadastrarReserva() {
     let diaDeEntrada = parseInt(prompt("Insira o dia entrada:"))
     let diaDeSaida = parseInt(prompt("Insira o dia de saída:"))
 
+    if (reservas.some(reserva => reserva.id === id)) {
+        console.log("Erro: ID da reserva já existe!");
+        return;
+    }
+
+    if (!hoteis.some(hotel => hotel.id === idHotel)) {
+        console.log("Erro: ID do hotel não encontrado!");
+        return;
+    }
+
+    if (diaDeEntrada >= diaDeSaida) {
+        console.log("Erro: O dia de entrada deve ser menor que o dia de saída!");
+        return;
+    }
+
     let novaReserva = new Reserva(id, idHotel, nomeResponsavel, diaDeEntrada, diaDeSaida)
     reservas.push(novaReserva)
+    console.log("Reserva cadastrada com sucesso!");
 }
 
 function exibirReservasDoHotel(idHotel) {
+    let hotel = hoteis.find(hotel => hotel.id === idHotel);
+
+    if (!hotel) {
+        console.log("Erro: Hotel não encontrado!");
+        return;
+    }
+
+    let reservasHotel = reservas.filter(reserva => reserva.idHotel === idHotel);
+
+    if (reservasHotel.length === 0) {
+        console.log("Nenhuma reserva encontrada para este hotel.");
+        return;
+    }
+
     reservas.forEach((reserva) => {
         if (reserva.idHotel === idHotel) {
             console.log(`NOME DO HOTEL: ${hoteis.find(hotel => hotel.id === reserva.idHotel).nome}\n` +
@@ -84,20 +115,32 @@ function exibirReservasDoHotel(idHotel) {
 }
 
 function exibirReserva(id) {
-    reservas.forEach((reserva) => {
-        if (reserva.id === id) {
-            console.log(`NOME DO HOTEL: ${hoteis.find(hotel => hotel.id === reserva.idHotel).nome}\n ENDEREÇO: ${hoteis.find(hotel => hotel.id === reserva.idHotel).endereco}\n DIA DE ENTRADA: ${reserva.diaDeEntrada}\n DIA DE SAÍDA: ${reserva.diaDeSaida}`)
-        }
-    })
+    let reserva = reservas.find(reserva => reserva.id === id);
+
+    if (!reserva) {
+        console.log("Erro: Reserva não encontrada!");
+        return;
+    }
+
+    let hotel = hoteis.find(hotel => hotel.id === reserva.idHotel);
+    console.log(`NOME DO HOTEL: ${hotel.nome}\n ENDEREÇO: ${hotel.endereco}\n DIA DE ENTRADA: ${reserva.diaDeEntrada}\n DIA DE SAÍDA: ${reserva.diaDeSaida}`);
+
 }
 
+
 function exibirReservaPorNome(nome) {
-    reservas.forEach((reserva) => {
-        if (reserva.nomeResponsavel === nome) {
-            console.log(`NOME DO HOTEL: ${hoteis.find(hotel => hotel.id === reserva.idHotel).nome}\n` +
-                `DIA DE ENTRADA: ${reserva.diaDeEntrada}\n` +
-                `DIA DE SAÍDA: ${reserva.diaDeSaida}`);
-        }
+    let reservasUsuario = reservas.filter(reserva => reserva.nomeResponsavel === nome);
+
+    if (reservasUsuario.length === 0) {
+        console.log("Nenhuma reserva encontrada para essa pessoa.");
+        return;
+    }
+
+    reservasUsuario.forEach((reserva) => {
+        let hotel = hoteis.find(hotel => hotel.id === reserva.idHotel);
+        console.log(`NOME DO HOTEL: ${hotel.nome}\n` +
+            `DIA DE ENTRADA: ${reserva.diaDeEntrada}\n` +
+            `DIA DE SAÍDA: ${reserva.diaDeSaida}`);
     });
 }
 
@@ -108,10 +151,54 @@ function exibirHoteisPorCategoria(categoria) {
 function atualizarTelefoneCadastrado(idHotel, telefone) {
     let hotel = hoteis.find(hotel => hotel.id === idHotel);
 
-    if (hotel) {
-        hotel.telefone = telefone;
-        console.log(`Telefone atualizado para: ${telefone}`);
-    } else {
-        console.log("Hotel não encontrado.");
+    if (!hotel) {
+        console.log("Erro: Hotel não encontrado!");
+        return;
     }
+
+    hotel.telefone = telefone;
+    console.log(`Telefone atualizado para: ${telefone}`);
+}
+
+let continuar = true
+
+while (continuar === true) {
+    let opcao = parseFloat(prompt("HOTEL DODEV\n 1- Cadastrar hotel\n 2- Cadastrar reserva\n 3- Exibir reserva do hotel\n 4- Exibir informação da reserva\n 5- Exibir todas as suas reservas\n 6- Exibir hoteis por categoria\n 7- Atualizar telefone cadastraddo\n 8- Encerrar programa"))
+
+    switch (opcao) {
+        case 1:
+            cadastrarHotel()
+            break;
+        case 2:
+            cadastrarReserva()
+            break;
+        case 3:
+            let idHotel = parseInt(prompt("Insira o ID do hotel:"));
+            exibirReservasDoHotel(idHotel);
+            break;
+        case 4:
+            let idReserva = parseInt(prompt("Insira o ID da reserva:"));
+            exibirReserva(idReserva);
+            break;
+        case 5:
+            let nome = prompt("Insira o nome do responsável:");
+            exibirReservaPorNome(nome);
+            break;
+        case 6:
+            let categoria = prompt("Insira a categoria desejada:");
+            console.log(exibirHoteisPorCategoria(categoria));
+            break;
+        case 7:
+            let idHotelAtualizar = parseInt(prompt("Insira o ID do hotel:"));
+            let telefoneNovo = prompt("Insira o novo telefone:");
+            atualizarTelefoneCadastrado(idHotelAtualizar, telefoneNovo);
+            break;
+        case 8:
+            continuar = false;
+            console.log("Programa encerrado.");
+            break;
+        default:
+            alert("Opção inválida! Tente novamente.");
+    }
+
 }
