@@ -12,7 +12,14 @@ class Livro {
     }
 }
 
-
+class Biblioteca {
+    constructor(nome, endereco, telefone, acervoLivros) {
+        this.nome = nome;
+        this.endereco = endereco;
+        this.telefone = telefone;
+        this.acervoLivros = acervoLivros
+    }
+}
 
 while(continuar) {
     
