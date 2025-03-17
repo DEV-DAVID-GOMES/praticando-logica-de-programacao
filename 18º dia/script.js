@@ -36,7 +36,18 @@ class Biblioteca {
     }
 }
 
+function criarBiblioteca() {
+    const nome = prompt("Digite o nome da biblioteca:");
+    const endereco = prompt("Digite o endereço da biblioteca:");
+    const telefone = prompt("Digite o telefone da biblioteca:");
 
+    return new Biblioteca(nome, endereco, telefone);
+}
+
+// Exemplo de uso:
+const minhaBiblioteca = criarBiblioteca();
+minhaBiblioteca.adicionarLivro("Dom Casmurro", "Machado de Assis", "Editora X", 1899, "Disponível");
+minhaBiblioteca.buscarLivro("Dom Casmurro");
 
 
 
