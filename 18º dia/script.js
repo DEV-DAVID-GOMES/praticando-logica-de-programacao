@@ -1,4 +1,5 @@
 let livros = []
+
 continuar = true
 
 class Livro {
@@ -17,30 +18,27 @@ class Biblioteca {
         this.nome = nome;
         this.endereco = endereco;
         this.telefone = telefone;
-        this.acervoLivros = []
+        this.acervoLivros = []; // O acervo agora está na classe
+    }
+
+    adicionarLivro(titulo, autor, editora, anoPublicacao, disponibilidade) {
+        this.acervoLivros.push({ titulo, autor, editora, anoPublicacao, disponibilidade });
+    }
+
+    buscarLivro(nomeLivro) {
+        let livro = this.acervoLivros.find(livro => livro.titulo === nomeLivro);
+
+        if (livro) {
+            console.log(`TÍTULO DO LIVRO: ${livro.titulo}\nAUTOR: ${livro.autor}\nEDITORA: ${livro.editora}\nANO: ${livro.anoPublicacao}\nDISPONIBILIDADE: ${livro.disponibilidade}`);
+        } else {
+            console.log("LIVRO NÃO ENCONTRADO!");
+        }
     }
 }
 
-function criarBiblioteca() {
-    const nome = prompt("Digite o nome da biblioteca:");
-    const endereco = prompt("Digite o endereço da biblioteca:");
-    const telefone = prompt("Digite o telefone da biblioteca:");
 
-    return new Biblioteca(nome, endereco, telefone);
-}
 
-const minhaBiblioteca = criarBiblioteca();
-console.log(minhaBiblioteca);
 
-while(continuar) {
-    
-
-    continuar = parseFloat(prompt("deseja adicionar mais livro:\n 1- SIM\n 2- NÃO"))
-    if(continuar === 2) {
-        continuar = false
-
-    }
-}
 
 // while(continuar) {
     
