@@ -52,8 +52,27 @@ class Biblioteca {
         console.log(`LIVRO "${livro.titulo}" FOI EMPRESTADO COM SUCESSO.`);
         return true;
     }
+
+    devolucaoDeLivro(nomeLivro) {
+        let livro = this.acervoLivros.find(livro => livro.titulo === nomeLivro);
+        
+        if (!livro) {
+            console.log("LIVRO NÃO ENCONTRADO!");
+            return false;
+        }
     
-}
+        if (livro.disponibilidade) {
+            console.log("LIVRO JÁ ESTÁ NA BIBLIOTECA!");
+            return false;
+        }
+    
+        livro.disponibilidade = true;
+        console.log(`LIVRO "${livro.titulo}" DEVOLVIDO COM SUCESSO.`);
+        return true;
+    }
+    }
+    
+
 
 function criarBiblioteca() {
     const nome = prompt("Digite o nome da biblioteca:");
