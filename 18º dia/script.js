@@ -1,110 +1,78 @@
-let livros = []
-
-continuar = true
-
+//CRIANDO CLASSE LIVRO
 class Livro {
-    constructor(titulo, autor, editora, anoPublicacao) {
-        this.titulo = titulo;
-        this.autor = autor;
-        this.editora = editora;
-        this.anoPublicacao = anoPublicacao;
-        this.disponibilidade = true
+    Titulo
+    Autor
+    Editora
+    AnoDePublicacao
+    Disponibilidade = true
 
+    constructor(titulo, autor, editora, anoDePublicacao) {
+        this.Titulo = titulo
+        this.Autor = autor
+        this.Editora = editora
+        this.AnoDePublicacao = anoDePublicacao
     }
 }
 
+//CRIANDO OBJETOS DA CLASSE LIVRO
+let livros = []
+livros.push(new Livro("livro1", "marcos", "editora A", 2001))
+livros.push(new Livro("livro2", "marcos", "editora F", 1997))
+livros.push(new Livro("livro3", "Carlos", "editora F", 2010))
+livros.push(new Livro("livro4", "Joao", "editora A", 2005))
+livros.push(new Livro("livro5", "Fabio", "editora C", 2020))
+
+//CRIANDO CLASSE BIBLIOTECA
 class Biblioteca {
-    constructor(nome, endereco, telefone) {
-        this.nome = nome;
-        this.endereco = endereco;
-        this.telefone = telefone;
-        this.acervoLivros = []; // O acervo agora está na classe
+    Nome
+    Endereco
+    Telefone
+    AcervoLivros = []
+    constructor(nome, telefone, endereco, acervo) {
+        this.Nome = nome
+        this.Telefone = telefone
+        this.Endereco = endereco
+        this.AcervoLivros = acervo
     }
 
-    adicionarLivro(titulo, autor, editora, anoPublicacao, disponibilidade) {
-        this.acervoLivros.push({ titulo, autor, editora, anoPublicacao, disponibilidade });
+    BuscarLivroPeloTitulo(titulo) {
+        this.AcervoLivros.forEach(livro => {
+            if (livro.Titulo == titulo) {
+                console.log(livro)
+            }
+        })
     }
 
-    buscarLivro(nomeLivro) {
-        let livro = this.acervoLivros.find(livro => livro.titulo === nomeLivro);
-
-        if (livro) {
-            console.log(`TÍTULO DO LIVRO: ${livro.titulo}\nAUTOR: ${livro.autor}\nEDITORA: ${livro.editora}\nANO: ${livro.anoPublicacao}\nDISPONIBILIDADE: ${livro.disponibilidade}`);
+    EmprestarLivro(titulo) {
+        let emprestado = false
+        this.AcervoLivros.forEach(livro => {
+            if (livro.Titulo == titulo) {
+                if (livro.Disponibilidade == true) {
+                    livro.Disponibilidade = false
+                    emprestado = true
+                }
+            }
+        })
+        if (emprestado) {
+            return true
         } else {
-            console.log("LIVRO NÃO ENCONTRADO!");
+            return false
         }
     }
 
-    emprestimoDeLivro(nomeLivro) {
-        let livro = this.acervoLivros.find(livro => livro.titulo === nomeLivro);
-    
-        if (!livro) {
-            console.log("LIVRO NÃO ENCONTRADO!");
-            return false;
-        }
-    
-        if (!livro.disponibilidade) {
-            console.log("LIVRO JÁ ESTÁ EMPRESTADO!");
-            return false;
-        }
-    
-        livro.disponibilidade = false;
-        console.log(`LIVRO "${livro.titulo}" FOI EMPRESTADO COM SUCESSO.`);
-        return true;
+
+    DevolverLivro(titulo) {
+        this.AcervoLivros.forEach(livro => {
+            if (livro.Titulo == titulo) {
+                livro.Disponibilidade = true
+                console.log("Livro devolvido")
+            }
+        })
     }
-
-    devolucaoDeLivro(nomeLivro) {
-        let livro = this.acervoLivros.find(livro => livro.titulo === nomeLivro);
-        
-        if (!livro) {
-            console.log("LIVRO NÃO ENCONTRADO!");
-            return false;
-        }
-    
-        if (livro.disponibilidade) {
-            console.log("LIVRO JÁ ESTÁ NA BIBLIOTECA!");
-            return false;
-        }
-    
-        livro.disponibilidade = true;
-        console.log(`LIVRO "${livro.titulo}" DEVOLVIDO COM SUCESSO.`);
-        return true;
-    }
-    }
-    
-
-
-function criarBiblioteca() {
-    const nome = prompt("Digite o nome da biblioteca:");
-    const endereco = prompt("Digite o endereço da biblioteca:");
-    const telefone = prompt("Digite o telefone da biblioteca:");
-
-    return new Biblioteca(nome, endereco, telefone);
 }
 
+let biblioteca = new Biblioteca("Biblioteca DoDev", "123456", "Rua 2", livros)
 
-const minhaBiblioteca = criarBiblioteca();
-minhaBiblioteca.adicionarLivro("Dom Casmurro", "Machado de Assis", "Editora X", 1899, "Disponível");
-minhaBiblioteca.buscarLivro("Dom Casmurro");
-
-
-
-// while(continuar) {
-    
-//     let titulo  = prompt("Insira o titulo do livro:")
-//     let autor = prompt("Insira o nome do autor:")
-//     let editora = prompt("Insira o nome da editora:")
-//     let anoPublicacao = prompt("Insira o ano de publicação:")
-
-  
-//     const novoLivro = new Livro(titulo, autor, editora, anoPublicacao)
-//     livros.push(novoLivro)
-
-//     continuar = parseFloat(prompt("deseja adicionar mais livro:\n 1- SIM\n 2- NÃO"))
-//     if(continuar === 2) {
-//         continuar = false
-
-//     }
-// }
-
-// console.log(livros)
+biblioteca.BuscarLivroPeloTitulo("livro2")
+biblioteca.EmprestarLivro("livro1")
+biblioteca.DevolverLivro("livro1")
