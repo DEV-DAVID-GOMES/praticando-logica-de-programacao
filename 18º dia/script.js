@@ -34,6 +34,25 @@ class Biblioteca {
             console.log("LIVRO NÃO ENCONTRADO!");
         }
     }
+
+    emprestimoDeLivro(nomeLivro) {
+        let livro = this.acervoLivros.find(livro => livro.titulo === nomeLivro);
+    
+        if (!livro) {
+            console.log("LIVRO NÃO ENCONTRADO!");
+            return false;
+        }
+    
+        if (!livro.disponibilidade) {
+            console.log("LIVRO JÁ ESTÁ EMPRESTADO!");
+            return false;
+        }
+    
+        livro.disponibilidade = false;
+        console.log(`LIVRO "${livro.titulo}" FOI EMPRESTADO COM SUCESSO.`);
+        return true;
+    }
+    
 }
 
 function criarBiblioteca() {
@@ -44,7 +63,7 @@ function criarBiblioteca() {
     return new Biblioteca(nome, endereco, telefone);
 }
 
-// Exemplo de uso:
+
 const minhaBiblioteca = criarBiblioteca();
 minhaBiblioteca.adicionarLivro("Dom Casmurro", "Machado de Assis", "Editora X", 1899, "Disponível");
 minhaBiblioteca.buscarLivro("Dom Casmurro");
